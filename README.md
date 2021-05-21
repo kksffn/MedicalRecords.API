@@ -14,6 +14,10 @@
     *GET /api/riskFactors/{id} ...get the risk factor with given id  
     *POST /api/riskFactors ...adding new risk factor  
     *PUT /api/riskFactors/{id} ...edit & update risk factor name  
+
+    *GET /api/user ...get the  logged in user  
+    *POST /api/user/signin ...login with email and psw
+    *POST /api/user/signup ...register with email and psw
     
 3 modules:  
 ##API:   
@@ -41,5 +45,5 @@
     *incomplete; swagger used  
     
 ##//TODO:  
-authentication (JWT token)  
+authentication (JWT token)  - DONE
 Vue.js frontend  
