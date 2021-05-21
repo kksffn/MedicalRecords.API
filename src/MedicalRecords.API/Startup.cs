@@ -8,6 +8,9 @@ using MedicalRecords.API.Extensions;
 using MedicalRecords.Domain.Extensions;
 using MedicalRecords.Domain.Repositories;
 using MedicalRecords.Infrastructure.Repositories;
+using MedicalRecords.Infrastructure.Extensions;
+
+
 
 namespace MedicalRecords.API
 {
@@ -29,6 +32,8 @@ namespace MedicalRecords.API
                 .AddScoped<IPatientRepository, PatientRepository>()
                 .AddScoped<IRiskFactorRepository, RiskFactorRepository>()
                 .AddScoped<IPatientRiskFactorRepository, PatientRiskFactorRepository>()
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddTokenAuthentication(Configuration) //Infrastructure.Extensions
                 .AddMappers()
                 .AddServices()
                 .AddControllers()
@@ -54,6 +59,7 @@ namespace MedicalRecords.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

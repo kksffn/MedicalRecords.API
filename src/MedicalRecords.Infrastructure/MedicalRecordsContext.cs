@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using MedicalRecords.Domain.Entities;
 using MedicalRecords.Domain.Repositories;
 using MedicalRecords.Infrastructure.SchemaDefinitions;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicalRecords.Infrastructure
 {
-    public class MedicalRecordsContext : DbContext, IUnitOfWork
+    public class MedicalRecordsContext : IdentityDbContext<User>, IUnitOfWork
     {
         public const string DEFAULT_SCHEMA = "MedicalRecords";
         public DbSet<Patient> Patients { get; set; }
@@ -25,6 +26,9 @@ namespace MedicalRecords.Infrastructure
             modelBuilder.ApplyConfiguration(new PatientEntitySchemaDefinition());
             modelBuilder.ApplyConfiguration(new RiskFactorEntitySchemaDefinition());
             modelBuilder.ApplyConfiguration(new PatientRiskFactorEntitySchemaDefinition());
+
+            //Because IdentityDbContext extends DbContext: 
+            base.OnModelCreating(modelBuilder);
         }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))

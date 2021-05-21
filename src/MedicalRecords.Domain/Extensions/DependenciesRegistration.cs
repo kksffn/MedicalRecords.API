@@ -24,7 +24,8 @@ namespace MedicalRecords.Domain.Extensions
             services
                 .AddScoped<IPatientService, PatientService>()
                 .AddScoped<IRiskFactorService, RiskFactorService>()
-                .AddScoped<IPatientRiskFactorService, PatientRiskFactorService>();
+                .AddScoped<IPatientRiskFactorService, PatientRiskFactorService>()
+                .AddScoped<IUserService, UserService>(); 
             return services;
         }
 

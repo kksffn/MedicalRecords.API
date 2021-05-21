@@ -5,15 +5,20 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C74AF80D-8147-43F0-845B-FB8D03B5192F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalRecords.API", "src\MedicalRecords.API\MedicalRecords.API.csproj", "{61C8767B-75E3-4E29-B3A7-0F1D8AFBFE7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedicalRecords.API", "src\MedicalRecords.API\MedicalRecords.API.csproj", "{61C8767B-75E3-4E29-B3A7-0F1D8AFBFE7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalRecords.Domain", "src\MedicalRecords.Domain\MedicalRecords.Domain.csproj", "{F216E20C-3AAD-40DF-961B-335C7002A64B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedicalRecords.Domain", "src\MedicalRecords.Domain\MedicalRecords.Domain.csproj", "{F216E20C-3AAD-40DF-961B-335C7002A64B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalRecords.Infrastructure", "src\MedicalRecords.Infrastructure\MedicalRecords.Infrastructure.csproj", "{DFE41228-9E32-4F5F-8DC7-AC7413097E40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedicalRecords.Infrastructure", "src\MedicalRecords.Infrastructure\MedicalRecords.Infrastructure.csproj", "{DFE41228-9E32-4F5F-8DC7-AC7413097E40}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{80A610E8-89F5-4D27-8A89-81E534C774D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalRecords.Infrastructure.Tests", "tests\MedicalRecords.Infrastructure.Tests\MedicalRecords.Infrastructure.Tests.csproj", "{C9B0AF52-2FC4-430E-8F53-7995D6FA2A76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedicalRecords.Infrastructure.Tests", "tests\MedicalRecords.Infrastructure.Tests\MedicalRecords.Infrastructure.Tests.csproj", "{C9B0AF52-2FC4-430E-8F53-7995D6FA2A76}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8514EF08-CE8E-4681-8B45-6E748B2B4FF8}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +28,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{61C8767B-75E3-4E29-B3A7-0F1D8AFBFE7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -77,10 +79,16 @@ Global
 		{C9B0AF52-2FC4-430E-8F53-7995D6FA2A76}.Release|x86.ActiveCfg = Release|Any CPU
 		{C9B0AF52-2FC4-430E-8F53-7995D6FA2A76}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{61C8767B-75E3-4E29-B3A7-0F1D8AFBFE7D} = {C74AF80D-8147-43F0-845B-FB8D03B5192F}
 		{F216E20C-3AAD-40DF-961B-335C7002A64B} = {C74AF80D-8147-43F0-845B-FB8D03B5192F}
 		{DFE41228-9E32-4F5F-8DC7-AC7413097E40} = {C74AF80D-8147-43F0-845B-FB8D03B5192F}
 		{C9B0AF52-2FC4-430E-8F53-7995D6FA2A76} = {80A610E8-89F5-4D27-8A89-81E534C774D3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8892435F-888A-43D1-ADD8-039C94FA72DE}
 	EndGlobalSection
 EndGlobal
