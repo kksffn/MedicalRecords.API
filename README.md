@@ -45,5 +45,5 @@
     *incomplete; swagger used  
     
 ##//TODO:  
-authentication (JWT token)  - DONE  
-Vue.js frontend  
+*authentication (JWT token)  - DONE  
+*Vue.js frontend  
