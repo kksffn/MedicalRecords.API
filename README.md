@@ -46,4 +46,9 @@
     
 ##//TODO:  
 *authentication (JWT token)  - DONE  
-*Vue.js frontend  
+
+*Vue.js frontend  added, just learning 
+*vuetify added, just learning  
+
+
+*HATEOAS ??
