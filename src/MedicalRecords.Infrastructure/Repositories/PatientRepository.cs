@@ -50,7 +50,6 @@ namespace MedicalRecords.Infrastructure.Repositories
             return patient;
         }
 
-
         public Patient Add(Patient patient)
         {
             return _context.Patients.Add(patient).Entity;

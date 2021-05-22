@@ -33,10 +33,10 @@ namespace MedicalRecords.Infrastructure.Extensions
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
                         IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidIssuer = "localhost:44370",
-                        ValidAudience = "localhost:44370"
+                        ValidateIssuer = false,
+                        ValidateAudience = false//,
+                        //ValidIssuer = "https://localhost:44370",
+                        //ValidAudience = "https://localhost:44370"
                     };
                 });
 

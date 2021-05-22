@@ -9,8 +9,7 @@ using MedicalRecords.Domain.Extensions;
 using MedicalRecords.Domain.Repositories;
 using MedicalRecords.Infrastructure.Repositories;
 using MedicalRecords.Infrastructure.Extensions;
-
-
+using MedicalRecords.API.Helpers;
 
 namespace MedicalRecords.API
 {
@@ -38,7 +37,10 @@ namespace MedicalRecords.API
                 .AddServices()
                 .AddControllers()
                 .AddValidation();
-            
+
+            //Add support for VUE
+            services.AddSpaStaticFiles(options => options.RootPath = "client-app/dist");
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MedicalRecords.API", Version = "v1" });
@@ -54,6 +56,11 @@ namespace MedicalRecords.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MedicalRecords.API v1"));
             }
+            else
+            {
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
 
@@ -65,6 +72,17 @@ namespace MedicalRecords.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSpaStaticFiles();
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "client-app";
+                if (env.IsDevelopment())
+                {
+                    // Launch development server for Vue.js
+                    spa.UseVueDevelopmentServer();
+                }
             });
         }
     }
