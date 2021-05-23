@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <h1 class="display-2 font-weight-bold mb-3">
+    <h1 class="display-2 font-weight-bold mb-2">
       List of all patients
     </h1>
 
@@ -15,8 +15,11 @@
         Create new patient
       </v-btn>
     </v-card>
-
     <!-- ################ TABLE WITH ALL PATIENTS ############################# -->
+    <v-card class="d-flex" pl-20 ml-10 mr-10 flat tile>
+      <v-text-field label="Not available yet" prepend-icon="mdi-magnify">
+      </v-text-field>
+    </v-card>
     <v-simple-table class="elevation-1">
       <template v-slot:default>
         <thead>
@@ -69,6 +72,7 @@
           <v-container class="max-width">
             <v-pagination small v-model="page"
                           class="my-4"
+                          cols="12" sm="6" md="4"
                           :length="numberOfPages"
                           @input="onPageChanged">
             </v-pagination>
@@ -76,19 +80,32 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-row>
+      <v-col cols="5">
+        Number of rows per page:
+      </v-col>
+      <v-col cols="2">
+        <v-card class="d-flex" mr-10 flat tile cols="1">
+          <v-text-field dense
+                        v-model="newPageSize"
+                        @input="setPageSize">
+          </v-text-field>
+        </v-card>
+      </v-col>
+    </v-row>
 
     <!-- ################ DIALOGS ############################# -->
     <!--<v-dialog v-model="dialogDelete" max-width="550px">
-      <v-card>
-        <v-card-title class="headline">Are you sure you want to delete the patient?</v-card-title>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-          <v-spacer></v-spacer>
-        </v-card-actions>
-      </v-card>-->
-   <!-- </v-dialog>-->
+  <v-card>
+    <v-card-title class="headline">Are you sure you want to delete the patient?</v-card-title>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+      <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+      <v-spacer></v-spacer>
+    </v-card-actions>
+  </v-card>-->
+    <!-- </v-dialog>-->
   </div>
 </template>
 
@@ -99,6 +116,7 @@ export default {
   data: () => ({
     page: 1,
     pageSize: 10,
+    newPageSize: '',
     numberOfPages: 15,
     totalPatients: 150,
 
@@ -107,8 +125,10 @@ export default {
     selectedOwnerId: 0,
     alertModalTitle: '',
     alertModalContent: '',
+
     patients: [],
     editedIndex: -1,
+
     editedItem: {
       name: '',
       calories: 0,
@@ -156,6 +176,12 @@ export default {
     onPageChanged () {
       this.initialize('?pageSize=' + this.pageSize + '&pageIndex=' + (this.page - 1))
     },
+    setPageSize () {
+      this.pageSize = this.newPageSize
+      this.newPageSize = ''
+      console.log(this.pageSize)
+      this.onPageChanged()
+    },
     countNumberOfPages () {
       this.numberOfPages = Math.ceil(this.totalPatients / this.pageSize)
     },
@@ -166,7 +192,8 @@ export default {
       console.log(this.page)
       console.log(this.patients.total)
       console.log(this.patients.pageSize)
-    }// ,
+    }
+    // ,
     // editItem (item) {
     //  this.editedIndex = this.patients.data.indexOf(item)
     //  this.editedItem = Object.assign({}, item)
