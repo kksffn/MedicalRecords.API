@@ -1,5 +1,8 @@
 # MedicalRecords.API
-##RESTFul API in :NET Core 3.1; EntityFramework (code-first approach); 
+##RESTFul API in .NET Core 3.1; EntityFramework (code-first approach);  
+
+frontend: localhost:8080  
+backend: localhost:44370  
 
 ##Endpoints:  
     * GET /api/patients  ...paginated list of all active patients  
@@ -47,8 +50,7 @@
 ##//TODO:  
 *authentication (JWT token)  - DONE  
 
-*Vue.js frontend  added, just learning 
+*Vue.js frontend  added, just learning  
 *vuetify added, just learning  
-
 
 *HATEOAS ??
