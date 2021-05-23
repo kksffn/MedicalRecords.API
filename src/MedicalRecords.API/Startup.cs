@@ -62,6 +62,15 @@ namespace MedicalRecords.API
                 app.UseHsts();
             }
 
+
+            //To enable calls from the client
+            app.UseCors(cfg =>
+            {
+                cfg.AllowAnyOrigin();
+                cfg.AllowAnyMethod();
+
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
