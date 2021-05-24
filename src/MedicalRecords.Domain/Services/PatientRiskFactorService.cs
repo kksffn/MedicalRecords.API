@@ -65,7 +65,7 @@ namespace MedicalRecords.Domain.Services
 
             PatientRiskFactor patientRiskFactor = _patientRiskFactorMapper.Map(request);
 
-            _patientRiskFactorRepository.Delete(patientRiskFactor);
+            await _patientRiskFactorRepository.Delete(patientRiskFactor);
             await _patientRiskFactorRepository.UnitOfWork.SaveChangesAsync();
 
             return _patientRiskFactorMapper.Map(patientRiskFactor);

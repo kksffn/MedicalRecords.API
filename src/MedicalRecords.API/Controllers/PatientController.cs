@@ -1,5 +1,6 @@
 ﻿using MedicalRecords.API.Filters;
 using MedicalRecords.API.ResponseModels;
+using MedicalRecords.Domain.Entities;
 using MedicalRecords.Domain.Requests;
 using MedicalRecords.Domain.Requests.Patient;
 using MedicalRecords.Domain.Responses;

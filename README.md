@@ -7,10 +7,10 @@ backend: localhost:44370
 ##Endpoints:  
     * GET /api/patients  ...paginated list of all active patients  
     * GET /api/patients/{id} ...get the patent with given id      
-    * POST /api/patients  ...adding new patient - without adding risk factors into DB //TODO      
-    * PUT /api/patients/{id} ...updating a patient - without updating risk factors //TODO      
+    * POST /api/patients  ...adding new patient - without updating risk factors //TODO  
+    * PUT /api/patients/{id} ...updating a patient - including risk factors (the old records are deleted the new ones are inserted)      
     * DELETE /api/patients/{id} ...soft delete of the patient (bool IsInactive set to 1)  
-    
+        
     *POST api/patientRiskFactors ...to add new item into joining table  
     *DELETE api/patientRiskFactors ...to delete the item in joining table  
     *GET /api/riskFactors  ...paginated list of all risk factors  
