@@ -25,16 +25,27 @@
         <thead>
           <tr>
             <th class="text-left" cols="12" sm="6" md="4">
-              Name
+              <v-btn small text color="black" class="pl-0 ml-0"
+                     @click="sortBy('patientName')" slot="activator">
+                Name
+              </v-btn>
             </th>
             <th class="text-left" cols="12" sm="6" md="4">
-              Surname
+              <v-btn small text color="black" class="pl-0 ml-0"
+                     @click="sortBy('patientSurname')" slot="activator">
+                Surname
+              </v-btn>
             </th>
             <th class="text-left" cols="12" sm="6" md="4">
-              Date of birth
+              <v-btn small text color="black" class="pl-0 ml-0"
+                     @click="sortBy('dateOfBirth')" slot="activator">
+                Date of birth
+              </v-btn>
             </th>
             <th class="text-center" cols="12" sm="6" md="4">
-              Action
+              <v-btn small text color="black" class="pl-0 ml-0">
+                Action
+              </v-btn>
             </th>
           </tr>
         </thead>
@@ -87,8 +98,8 @@
       <v-col cols="2">
         <v-card class="d-flex" mr-10 flat tile cols="1">
           <v-text-field dense
-                        v-model="newPageSize"
-                        @input="setPageSize">
+                        v-model.lazy.number="newPageSize"
+                        @keypress.enter="setPageSize">
           </v-text-field>
         </v-card>
       </v-col>
@@ -173,8 +184,11 @@ export default {
         this.countNumberOfPages()
       })
     },
+    sortBy (prop) {
+      this.patients.sort((a, b) => a[prop] < b[prop] ? -1 : 1)
+    },
     onPageChanged () {
-      this.initialize('?pageSize=' + this.pageSize + '&pageIndex=' + (this.page - 1))
+      this.initialize('pageSize=' + this.pageSize + '&pageIndex=' + (this.page - 1))
     },
     setPageSize () {
       this.pageSize = this.newPageSize

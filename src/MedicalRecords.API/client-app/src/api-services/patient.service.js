@@ -4,7 +4,11 @@ const RESOURCE_NAME = '/patients'
 
 export default {
   getAll (params) {
-    return Axios.get(RESOURCE_NAME + '?' + params)
+    if (params !== '') {
+      return Axios.get(RESOURCE_NAME + '?' + params)
+    }
+
+    return Axios.get(RESOURCE_NAME)
   },
   get (id) {
     return Axios.get(`${RESOURCE_NAME}/${id}`)
