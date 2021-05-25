@@ -134,6 +134,13 @@ namespace MedicalRecords.Infrastructure.Repositories
 
         }
 
-
+        public async Task<int> CountPatients(string search)
+        {
+            return await _context.Patients
+                .Where(p => !p.IsInactive)
+                .Where(p => EF.Functions.Like(p.PatientSurname, '%' + search + '%')
+                | EF.Functions.Like(p.PatientName, '%' + search + '%'))
+                .CountAsync();
+        }
     }
 }

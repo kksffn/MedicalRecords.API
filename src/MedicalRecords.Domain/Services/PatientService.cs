@@ -34,7 +34,7 @@ namespace MedicalRecords.Domain.Services
             IEnumerable<Patient> patientsFromDb = await _patientRepository.GetAsync(pageSize, pageIndex,
             orderBy, order, search);
 
-            int totalPatients = patientsFromDb.Count();
+            int totalPatients = await _patientRepository.CountPatients(search); 
 
             IEnumerable<PatientResponse> patientResponses = patientsFromDb
                 .Select(x => _patientMapper.Map(x));

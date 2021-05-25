@@ -20,18 +20,7 @@ namespace MedicalRecords.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
         {
-            var result = await _riskFactorService.GetRiskFactorsAsync();
-
-            var totalRiskFactors = result.Count();
-
-            var RiskFactorsOnPage = result
-                .OrderBy(r => r.Id)
-                .Skip(pageSize * pageIndex)
-                .Take(pageSize);
-
-            var model = new PaginatedEntityResponseModel<RiskFactorResponse>(
-                pageIndex, pageSize, totalRiskFactors, RiskFactorsOnPage);
-
+            var model = await _riskFactorService.GetRiskFactorsAsync(pageSize, pageIndex);   
 
             return Ok(model);
 

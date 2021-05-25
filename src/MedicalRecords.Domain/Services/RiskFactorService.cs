@@ -28,11 +28,18 @@ namespace MedicalRecords.Domain.Services
             _patientMapper = patientMapper;
         }
 
-        public async Task<IEnumerable<RiskFactorResponse>> GetRiskFactorsAsync()
+        public async Task<PaginatedEntityResponseModel<RiskFactorResponse>> GetRiskFactorsAsync(int pageSize, int pageIndex)
         {
-            var result = await _riskFactorRepository.GetAsync();
-            return result
+            IEnumerable<RiskFactor> riskFactorsFromDb = 
+                await _riskFactorRepository.GetAsync(pageSize, pageIndex);
+
+            IEnumerable<RiskFactorResponse> riskFactorResponses = riskFactorsFromDb
                 .Select(x => _riskFactorMapper.Map(x));
+
+            int totalRiskFactors = await _riskFactorRepository.CountRiskFactors();
+
+            return new PaginatedEntityResponseModel<RiskFactorResponse>
+                (pageIndex, pageSize, totalRiskFactors, riskFactorResponses);
         }
 
         public async Task<RiskFactorResponse> GetRiskFactorAsync(GetRiskFactorRequest request)

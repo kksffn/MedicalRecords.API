@@ -15,7 +15,8 @@ namespace MedicalRecords.Domain.Repositories
         Task<Patient> GetAsync(int id);
         Patient Add(Patient patient);
         Patient Update(Patient patient);
-        
+        Task<int> CountPatients(string search);
+
         //Task<IEnumerable<Patient>> GetPatientByRiskFactorIdAsync(int id);
     }
 }
