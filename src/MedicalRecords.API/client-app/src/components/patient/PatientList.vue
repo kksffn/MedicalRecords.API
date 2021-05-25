@@ -17,7 +17,8 @@
     </v-card>
     <!-- ################ TABLE WITH ALL PATIENTS ############################# -->
     <v-card class="d-flex" pl-20 ml-10 mr-10 flat tile>
-      <v-text-field label="Not available yet" prepend-icon="mdi-magnify">
+      <v-text-field label="Search by name or surname" prepend-icon="mdi-magnify"
+                    @keyup="searchBy()" v-model="searchByString"> {{ searchByString }}
       </v-text-field>
     </v-card>
     <v-simple-table class="elevation-1">
@@ -28,22 +29,52 @@
               <v-btn small text color="black" class="pl-0 ml-0"
                      @click="sortBy('patientName')" slot="activator">
                 Name
+                <v-icon v-if="ascending == 1 && sortByString == 'patientName'"
+                        small
+                        class="mr-2">
+                  mdi-arrow-up
+                </v-icon>
+                <v-icon v-if="ascending == 2 && sortByString == 'patientName'"
+                        small
+                        class="mr-2">
+                  mdi-arrow-down
+                </v-icon>
               </v-btn>
             </th>
             <th class="text-left" cols="12" sm="6" md="4">
               <v-btn small text color="black" class="pl-0 ml-0"
                      @click="sortBy('patientSurname')" slot="activator">
                 Surname
+                <v-icon v-if="ascending == 1 && sortByString == 'patientSurname'"
+                        small
+                        class="mr-2">
+                  mdi-arrow-up
+                </v-icon>
+                <v-icon v-if="ascending == 2 && sortByString == 'patientSurname'"
+                        small
+                        class="mr-2">
+                  mdi-arrow-down
+                </v-icon>
               </v-btn>
             </th>
             <th class="text-left" cols="12" sm="6" md="4">
               <v-btn small text color="black" class="pl-0 ml-0"
                      @click="sortBy('dateOfBirth')" slot="activator">
                 Date of birth
+                <v-icon v-if="ascending == 1 && sortByString == 'dateOfBirth'"
+                        small
+                        class="mr-2">
+                  mdi-arrow-up
+                </v-icon>
+                <v-icon v-if="ascending == 2 && sortByString == 'dateOfBirth'"
+                        small
+                        class="mr-2">
+                  mdi-arrow-down
+                </v-icon>
               </v-btn>
             </th>
             <th class="text-center" cols="12" sm="6" md="4">
-              <v-btn small text color="black" class="pl-0 ml-0">
+              <v-btn small text color="black" class="pl-0 ml-0" disabled>
                 Action
               </v-btn>
             </th>
@@ -130,6 +161,9 @@ export default {
     newPageSize: '',
     numberOfPages: 15,
     totalPatients: 150,
+    sortByString: '',
+    ascending: 0,
+    searchByString: '',
 
     dialog: false,
     dialogDelete: false,
@@ -182,18 +216,33 @@ export default {
         this.pageSize = this.patients.pageSize
         this.totalPatients = this.patients.total
         this.countNumberOfPages()
+        console.log(this.searchByString)
       })
     },
     sortBy (prop) {
-      this.patients.sort((a, b) => a[prop] < b[prop] ? -1 : 1)
+      this.sortByString = prop
+      this.ascending = (this.ascending + 1) % 3
+      this.initialize('pageSize=' + this.pageSize + '&pageIndex=' + (this.page - 1) + '&orderBy=' +
+        (this.ascending === 0 ? 'id' : this.sortByString) +
+        (this.ascending === 2 ? '&order=desc' : '&order=asc') +
+        '&search=' + this.searchByString)
+    },
+    searchBy () {
+      this.initialize('pageSize=' + this.pageSize + '&pageIndex=' + (this.page - 1) + '&orderBy=' +
+        (this.ascending === 0 ? 'id' : this.sortByString) +
+        (this.ascending === 2 ? '&order=desc' : '&order=asc') +
+        '&search=' + this.searchByString)
     },
     onPageChanged () {
-      this.initialize('pageSize=' + this.pageSize + '&pageIndex=' + (this.page - 1))
+      this.initialize('pageSize=' + this.pageSize + '&pageIndex=' + (this.page - 1) + '&orderBy=' +
+        (this.ascending === 0 ? 'id' : this.sortByString) +
+        (this.ascending === 2 ? '&order=desc' : '&order=asc') +
+        '&search=' + this.searchByString)
     },
     setPageSize () {
       this.pageSize = this.newPageSize
       this.newPageSize = ''
-      console.log(this.pageSize)
+      this.page = 1
       this.onPageChanged()
     },
     countNumberOfPages () {
