@@ -28,11 +28,19 @@ namespace MedicalRecords.Domain.Services
             _patientRiskFactorService = patientRiskFactorService;
         }
 
-        public async Task<IEnumerable<PatientResponse>> GetPatientsAsync()
+        public async Task<PaginatedEntityResponseModel<PatientResponse>> GetPatientsAsync(int pageSize, int pageIndex,
+            string orderBy, string order, string search)
         {
-            var result = await _patientRepository.GetAsync();
-            return result
+            IEnumerable<Patient> patientsFromDb = await _patientRepository.GetAsync(pageSize, pageIndex,
+            orderBy, order, search);
+
+            int totalPatients = patientsFromDb.Count();
+
+            IEnumerable<PatientResponse> patientResponses = patientsFromDb
                 .Select(x => _patientMapper.Map(x));
+
+            return new PaginatedEntityResponseModel<PatientResponse>(
+                pageIndex, pageSize, totalPatients, patientResponses);
         }
 
         public async Task<PatientResponse> GetPatientAsync(GetPatientRequest request)

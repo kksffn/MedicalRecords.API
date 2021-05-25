@@ -19,16 +19,22 @@ namespace MedicalRecords.Infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Patient>> GetAsync()
+        public async Task<IEnumerable<Patient>> GetAsync(int pageSize, int pageIndex,
+            string orderBy, string order, string search)
         {
-            return await _context.Patients
-                .Where(p => !p.IsInactive)
-                .AsNoTracking()
-                .Include(p => p.PatientRiskFactors)
-                .ThenInclude(pr => pr.RiskFactor)
-                .ToListAsync();
-        }
+            // if search string is set, then search in patientName or patientSurname
+            var searchedPatients = SearchPatients(search);
 
+            // if orderBy is set then order the patient by patientName, patientSurname or DateOfBirth (Id is default) 
+            var orderedPatients = OrderPatients(searchedPatients, orderBy, order);
+
+            var selectedPatients = await orderedPatients
+                .Skip(pageSize * pageIndex)
+                .Take(pageSize)
+                .ToListAsync();            
+
+            return selectedPatients;
+        }
         public async Task<Patient> GetAsync(int id)
         {
             /* Eager loading*/
@@ -60,6 +66,74 @@ namespace MedicalRecords.Infrastructure.Repositories
             _context.Entry(patient).State = EntityState.Modified;
             return patient;
         }              
+
+        //HelperMethods
+        private IQueryable<Patient> SearchPatients(string search)
+        {
+            if (search == "")
+            {
+                return _context.Patients
+                .Where(p => !p.IsInactive)
+                .AsNoTracking()
+                .Include(p => p.PatientRiskFactors)
+                .ThenInclude(pr => pr.RiskFactor);
+            }
+
+            return _context.Patients
+                .Where(p => !p.IsInactive)
+                .Where(p => EF.Functions.Like(p.PatientSurname, '%' + search + '%') 
+                | EF.Functions.Like(p.PatientName, '%' + search + '%'))
+                .AsNoTracking()
+                .Include(p => p.PatientRiskFactors)
+                .ThenInclude(pr => pr.RiskFactor);
+        }
+
+        private IQueryable<Patient> OrderPatients(IQueryable<Patient> searchedPatients, string orderBy, string order)
+        {
+            IQueryable<Patient> orderedPatients;
+
+            switch (orderBy.ToLower())
+            {
+                case "patientsurname":
+                    {
+                        orderedPatients = searchedPatients
+                            .OrderBy(p => p.PatientSurname)
+                            .ThenBy(p => p.PatientName);
+                        break;
+                    }
+
+                case "patientname":
+                    {
+                        orderedPatients = searchedPatients
+                            .OrderBy(p => p.PatientName)
+                            .ThenBy(p => p.PatientSurname);
+                        break;
+                    }
+
+                case "dateofbirth":
+                    {
+                        orderedPatients = searchedPatients
+                            .OrderBy(p => p.DateOfBirth);
+                        break;
+                    }
+
+                default:
+                    {
+                        orderedPatients = searchedPatients
+                            .OrderBy(p => p.Id);
+                        break;
+                    }
+            }
+
+            if(order.ToLower() == "desc")
+            {
+                return orderedPatients.Reverse();
+            }
+
+            return orderedPatients;
+
+        }
+
 
     }
 }

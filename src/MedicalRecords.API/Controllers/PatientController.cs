@@ -1,12 +1,8 @@
 ﻿using MedicalRecords.API.Filters;
-using MedicalRecords.API.ResponseModels;
-using MedicalRecords.Domain.Entities;
 using MedicalRecords.Domain.Requests;
 using MedicalRecords.Domain.Requests.Patient;
-using MedicalRecords.Domain.Responses;
 using MedicalRecords.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MedicalRecords.API.Controllers
@@ -22,25 +18,12 @@ namespace MedicalRecords.API.Controllers
             _patientService = patientService;
         }
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
+        public async Task<IActionResult> Get([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0,
+            [FromQuery] string orderBy = "", [FromQuery] string order = "", [FromQuery] string search = "")
         {
-            var result = await _patientService.GetPatientsAsync();
+            var model =  await _patientService.GetPatientsAsync(pageSize,pageIndex,orderBy,order,search);
 
-            var totalPatients = result.Count();
-
-            var patientsOnPage = result
-                .OrderBy(p => p.Id)
-                //.OrderBy(p => p.PatientSurname )
-                //.ThenBy(p => p.PatientName)
-                .Skip(pageSize * pageIndex)
-                .Take(pageSize);
-
-            var model = new PaginatedEntityResponseModel<PatientResponse>(
-                pageIndex, pageSize, totalPatients, patientsOnPage);
-
-
-            return Ok(model);
-            
+            return Ok(model);            
         }
 
         [HttpGet("{id}")]

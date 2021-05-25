@@ -1,5 +1,4 @@
-﻿using MedicalRecords.API.ResponseModels;
-using MedicalRecords.Domain.Responses;
+﻿using MedicalRecords.Domain.Responses;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;

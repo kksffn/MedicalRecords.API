@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MedicalRecords.API.ResponseModels
+namespace MedicalRecords.Domain.Responses
 {
     public class PaginatedEntityResponseModel<TEntity> where TEntity:class
     {

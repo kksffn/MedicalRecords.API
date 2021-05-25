@@ -8,7 +8,8 @@ namespace MedicalRecords.Domain.Services
 {
     public interface IPatientService
     {
-        Task<IEnumerable<PatientResponse>> GetPatientsAsync();
+        Task<PaginatedEntityResponseModel<PatientResponse>> GetPatientsAsync(int pageSize, int pageIndex, 
+            string orderBy, string order, string search);
         Task<PatientResponse> GetPatientAsync(GetPatientRequest request);
         Task<PatientResponse> AddPatientAsync(AddPatientRequest request);
         Task<PatientResponse> EditPatientAsync(EditPatientRequest request);
