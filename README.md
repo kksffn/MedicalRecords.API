@@ -1,8 +1,8 @@
 # MedicalRecords.API
 ##RESTFul API in .NET Core 3.1; EntityFramework (code-first approach);  
 
-frontend: localhost:8080  
-backend: localhost:44370  
+To run the frontend, run terminal with: ```npm run serve```  
+Make sure you run backend on: localhost:44370  
 
 ##Endpoints:  
     * GET /api/patients  ...paginated list of all active patients  
@@ -48,7 +48,7 @@ backend: localhost:44370
     *incomplete; swagger used  
     
 ##//TODO:  
-*authentication (JWT token)  - DONE  
+*authentication (JWT token)  - DONE in backend 
 
 *Vue.js frontend  added, just learning  
 *vuetify added, just learning  

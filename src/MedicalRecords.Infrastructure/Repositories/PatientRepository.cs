@@ -96,7 +96,14 @@ namespace MedicalRecords.Infrastructure.Repositories
             {
                 case "patientsurname":
                     {
-                        orderedPatients = searchedPatients
+                        if (order.ToLower() == "desc")
+                        {
+                            orderedPatients = searchedPatients
+                            .OrderByDescending(p => p.PatientSurname)
+                            .ThenByDescending(p => p.PatientName);
+                            break;
+                        }
+                            orderedPatients = searchedPatients
                             .OrderBy(p => p.PatientSurname)
                             .ThenBy(p => p.PatientName);
                         break;
@@ -104,6 +111,13 @@ namespace MedicalRecords.Infrastructure.Repositories
 
                 case "patientname":
                     {
+                        if (order.ToLower() == "desc")
+                        {
+                            orderedPatients = searchedPatients
+                            .OrderByDescending(p => p.PatientName)
+                            .ThenByDescending(p => p.PatientSurname);
+                            break;
+                        }
                         orderedPatients = searchedPatients
                             .OrderBy(p => p.PatientName)
                             .ThenBy(p => p.PatientSurname);
@@ -112,6 +126,12 @@ namespace MedicalRecords.Infrastructure.Repositories
 
                 case "dateofbirth":
                     {
+                        if (order.ToLower() == "desc")
+                        {
+                            orderedPatients = searchedPatients
+                           .OrderByDescending(p => p.DateOfBirth);
+                            break;
+                        }
                         orderedPatients = searchedPatients
                             .OrderBy(p => p.DateOfBirth);
                         break;
@@ -123,11 +143,6 @@ namespace MedicalRecords.Infrastructure.Repositories
                             .OrderBy(p => p.Id);
                         break;
                     }
-            }
-
-            if(order.ToLower() == "desc")
-            {
-                return orderedPatients.Reverse();
             }
 
             return orderedPatients;
